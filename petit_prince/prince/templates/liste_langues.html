@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  <h1></h1>
+  <h1>Liste des langues</h1>
+  <p>Le nombre entre parenthèses correspond au nombre d’enregistrements</p>
+
+    <!-- Sorting by alphabetical order in french -->
+    {% set liste_lang = prince_language|list|sort(attribute='french')%}
+
+    <!-- Defines the number of languages to display by column, in order to know the range of the loop for -->
+    {% set nb_par_col = liste_lang|length//4 %}
+
+    <!-- This section checks if the columns are going to be even or if the last one will have less languages. -->
+    {% if liste_lang|length%4 == 0 %}
+    <!-- If liste_lang|length/4 is a float, rounds it up -->
+    {% else %}
+      {% set nb_par_col = nb_par_col+1 %}
+    {% endif %}
+    <!-- Setting of a table with 4 columns -->
+    <!-- The computer_lang class is hidden with css when the screen size is small, displayed when it is a computer screen -->
+    <div class="container-fluid computer_lang">
+      <div class="row computer_lang">
+
+    {% for i in range(nb_par_col) %}
+        <div class="col-sm-3 col1">
+          <!-- liste_lang[i] refers to the current language -->
+          <!-- Displays also the number of recordings for this current language -->
+          <a class="text-my-own-color" href="{{url_for('langue', lang=liste_lang[i].french)}}">{{sentence_case(liste_lang[i].french)}} ({{sounds|selectattr("language", "equalto", liste_lang[i].iso)|list|length}})</a>
+        </div>
+        <div class="col-sm-3 col2">
+          <a class="text-my-own-color" href="{{url_for('langue', lang=liste_lang[i+nb_par_col].french)}}">{{sentence_case(liste_lang[i+nb_par_col].french)}} ({{sounds|selectattr("language", "equalto", liste_lang[i+nb_par_col].iso)|list|length}})</a>
+        </div>
+        <div class="col-sm-3 col3">
+          <a class="text-my-own-color" href="{{url_for('langue', lang=liste_lang[i+2*nb_par_col].french)}}">{{sentence_case(liste_lang[i+2*nb_par_col].french)}} ({{sounds|selectattr("language", "equalto", liste_lang[i+2*nb_par_col].iso)|list|length}})</a>
+        </div>
+      <!-- Makes sure that the index isn't out of range (deals with the last rows,
+           when there isn't a fourth column to display) -->
+      {% if i+3*nb_par_col < liste_lang|length %}
+        <div class="col-sm-3 col4">
+          <a class="text-my-own-color" href="{{url_for('langue', lang=liste_lang[i+3*nb_par_col].french)}}">{{sentence_case(liste_lang[i+3*nb_par_col].french)}} ({{sounds|selectattr("language", "equalto",  liste_lang[i+3*nb_par_col].iso)|list|length}})</a>
+        </div>
+      {% endif %}
+      <!-- Closing the row and opening a new one -->
+      </div>
+      <div class="row">
+    {% endfor %}
+    <!-- Closing the last row -->
+    </div>
+  </div>
+
+<!-- The phone_lang class is hidden with css when the screen size is big, and displayed for a phone screen -->
+<div class="container-fluid phone_lang">
+  {%for langue in liste_lang%}
+  <div class="col-sm phone_lang">
+    <!-- Displays also the number of recordings for this current language -->
+    <a href="{{url_for('langue', lang=langue.french)}}">{{sentence_case(langue.french)}} ({{sounds|selectattr("language", "equalto", langue.iso)|list|length}})</a>
+  </div>
+  {% endfor %}
+  <br>
+  </div>
+{% endblock content%}

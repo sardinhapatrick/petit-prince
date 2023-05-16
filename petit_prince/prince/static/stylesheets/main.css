@@ -1,0 +1,187 @@
+@viewport {
+  width: device-width ;
+  zoom: 1.0 ;
+}
+@-ms-viewport {
+  width: device-width ;
+}
+
+.row{
+  margin:10px;
+}
+
+a {
+  color: #bc1c03;
+}
+a:hover{
+  color:#800000;
+}
+
+/*img petit prince*/
+#prince {
+  float:left;
+  display:block;
+  width:100%;
+}
+#header {
+  color: #bc1c03;
+}
+.row_home{
+  display:flex; /*pour avoir 2 éléments à côté*/
+  margin:auto;
+}
+.column_home{
+  flex:50%;
+  padding:20px;
+  margin:auto;
+  padding-bottom: 40px;
+}
+.buttons {
+  margin:auto;
+  display:block;
+  width: auto;
+  padding:30px;
+  color: #bc1c03;
+  border-color: #bc1c03;
+}
+.btn{
+  margin: 5px;
+}
+.btn .btn-light .bg-steel : hover {
+  background-color: #f6d6bf;
+  color: #bc1c03;
+}
+.btn-light{
+  color: #bc1c03;
+  border-color: #bc1c03;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.bg-steel {
+  background-color: #f6d6bf; /*rose*/
+  opacity: 100%;
+}
+#navbar_petit_prince {
+  height: 25px;
+}
+.site-header .navbar-nav .nav-link {
+  color: #bc1c03; /*rose*/
+
+
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
+
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+/*liens*/
+.text-my-own-color {
+  color: #bc1c03 !important; // Define your own color in your CSS
+}
+
+
+.info-legend {
+    /*line-height: 5px;*/
+    color: #555;
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white; background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+  }
+
+.info-legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+.legend_map{
+  margin-bottom: 5px;
+}
+
+/*liste_langues*/
+.computer_lang{
+  visibility: visible;
+}
+.phone_lang{
+  display:none;
+}
+/*langue*/
+.column_langue {
+  float: left;
+  width: 50%;
+}
+.row_langue{
+  display: flex;
+}
+/* Clear floats after the columns */
+.row_langue:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.map_langue{
+  height: 400px;
+  width: 400px;
+}
+
+/*about.html*/
+.about_box {
+  padding: 20px;
+}
+/* responsive layout for phone screens*/
+@media screen and (max-width:580px) {
+  /* home: les éléments se placent les uns sous les autres*/
+  .row_home{
+    display:grid;
+  }
+  .column {
+    width: 100%;
+  }
+  .column_home {
+    font-size: 10px;
+  }
+  /* langue: les éléments se placent les uns sous les autres*/
+  .row_langue{
+    display:grid;
+  }
+  .column_langue{
+    width:auto;
+  }
+  /* diminution de la taille de la carte, sans la légende qui prend trop de place */
+  .map_langue{
+    height: 300px;
+    width: 300px;
+  }
+  .info-legend{
+    visibility:hidden;
+  }
+  /* Affichage de la liste des langues sur une colonne ou sur 4 */
+  .phone_lang{
+    display: block;
+  }
+  .computer_lang{
+    display:none;
+  }
+}

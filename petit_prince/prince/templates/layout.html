@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <!--thumbnail petit prince-->
+    <link rel="icon" href='{{ url_for('static', filename='img/prince_transparent.png')}}' type="image/x-icon" />
+    <link rel="shortcut icon" href='{{ url_for('static', filename='img/prince_transparent.png')}}' type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/mdb/mdb.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/cards.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/quiz_home.css') }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- leaflet pour carte, marqueurs etc-->
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='js/leaflet-providers.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/setScore.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/fireworks.js') }}"></script>
+    {% if title %}
+      <title>Petit Prince - {{title}}</title>
+    {% else %}
+      <title>Petit Prince</title>
+    {% endif %}
+  </head>
+  <body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel">
+          <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <!-- Navbar Right Side -->
+              <div class="nav navbar-nav mr-auto">
+
+                <a class="nav-item nav-link" href="{{url_for('home')}}">
+                  <img id="navbar_petit_prince"
+                  src=  '{{ url_for('static', filename='img/prince_transparent.png')}}' alt="petit_prince" width='20' height='20'>Accueil</a>
+                <a class="nav-item nav-link" href="{{url_for('liste_langues')}}">Liste des langues</a>
+                <a class="nav-item nav-link" href="{{url_for('carte')}}">Carte</a>
+                <a class="nav-item nav-link" href="{{url_for('about')}}">À propos</a>
+                <a class="nav-item nav-link" href="{{url_for('quiz_home')}}">Quiz</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <main role="main" class="container" >
+        {% macro sentence_case(text) %}
+          {{ text[0]|upper}}{{text[1:] }}
+        {% endmacro %}
+
+            {% block content %}lalal{% endblock %}
+      </main>
+      <!-- Footer -->
+      <footer class="footer font-small dark bg-steel pt-4 pb-2">
+
+        <!-- Footer Links -->
+        <div class="container-fluid text-center text-md-left">
+
+          <!-- Grid row -->
+          <div class="row">
+
+            <!-- Grid column -->
+            <div class="col-md-6 mt-md-0 mt-3">
+
+              <!-- Content -->
+              <h5 class="text-uppercase">Contact</h5>
+
+
+              <a class="text-my-own-color" href=mailto:jeanphilippegoldman@gmail.com>Envoyez-nous un enregistrement audio</a>
+              <br>
+              <a class="text-my-own-color" href="{{url_for('enregistrement')}}">(Visitez d'abord cette page qui offre quelques trucs pour bien enregistrer)</a><br>
+
+              <br>
+
+              <!-- Copyright -->
+              Copyright © 2020 Petit Prince | Université de Genève
+
+            </div>
+            <!-- Grid column -->
+            <br />
+
+      <hr class="clearfix w-100 d-md-none pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="text-uppercase">Liens</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a class="text-my-own-color" href="http://latlcui.unige.ch/phonetique">Phonétique @ UniGE</a>
+          </li>
+          <li>
+            <a class="text-my-own-color" href="http://www.unige.ch/lettres/linguistique">Département de Linguistique</a>
+          </li>
+          <li>
+            <a class="text-my-own-color" href="http://www.unige.ch/lettres">Faculté des Lettres</a>
+          </li>
+          <li>
+            <a class="text-my-own-color" href="http://www.unige.ch">Université de Genève</a>
+          </li>
+        </ul>
+
+
+            <hr class="clearfix w-100 d-md-none pb-3">
+          </div>
+        </div>
+      </div>
+      </footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../static/js/mdb/mdb.min.js"></script>
+  </body>
+</html>

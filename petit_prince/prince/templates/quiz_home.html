@@ -1,0 +1,285 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<head>
+<style media="screen">
+  .footer{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+</style>
+</head>
+
+<script type="text/javascript">
+  resetCookie()
+</script>
+<div>
+    <div id="all" class="row align-items-center mt-5">
+        <div class="audio col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+          <div id="select_audio">
+            <img class="mt-5 mb-5 w-75" src="../static/img/quiz_audio.png" alt="Quiz audio" style="height: 50%; width:50%">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+              <h2>Quiz Audio</h2>
+          </div>
+          <div class="lo_a col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+            <div id="normal_audio">
+              <img class="mt-5 mb-5 w-75" src="../static/img/mouton.jpeg" alt="Quiz audio" style="height: 50%; width:50%">
+              <a href="{{url_for('quiz_audio', level = "easy", sf="None", nb_answer="0")}}">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+              </a>
+              <h3>Mode Normal</h3>
+            </div>
+          </div>
+          <div class="param_audio col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+            <div id="custom_audio">
+              <img class="mt-5 mb-5 w-75" src="../static/img/fox.png" alt="Quiz audio" style="height: 50%; width:50%">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+              <h3>Mode Avancé</h3>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="text col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+          <div id="select_text">
+            <img class="mt-5 mb-5 w-75" src="../static/img/quiz_text.png" alt="Quiz textuel">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+              <h2>Quiz Textuel</h2>
+          </div>
+          <div class="lo_t col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+            <div id="normal_text">
+              <img class="mt-5 mb-5 w-75" src="../static/img/mouton.jpeg" alt="Quiz audio" style="height: 50%; width:50%">
+              <a href="{{url_for('quiz_text', level = "easy", sf="None", nb_answer="0")}}">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+              </a>
+              <h3>Mode Normal</h3>
+            </div>
+          </div>
+          <div class="param_text col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+            <div id="custom_text">
+              <img class="mt-5 mb-5 w-75" src="../static/img/fox.png" alt="Quiz audio" style="height: 50%; width:50%">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+              <h3>Mode Avancé</h3>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div id="all2_text" class="mb-5 row align-items-center a2">
+      <div class="card h-100 w-50">
+        <div class="card-title d-flex justify-content-center">
+          <h5 class="card-text mt-4">
+            Sélectionnez la famille de langues:
+          </h5>
+        </div>
+        <div class="card-body d-flex justify-content-center">
+          <select id="selec_famille" class="form-select" aria-label="Toutes les familles">
+            <option value="all" selected>Toutes les familles</option>
+            <option value="afro-asiatiques">Afro-asiatiques</option>
+            <option value="altaïques">Altaïques</option>
+            <option value="austronésiennes">Austronésiennes</option>
+            <option value="créoles et pidgins">Créoles et pidgins</option>
+            <option value="indo-européennes">Indo-européennes</option>
+            <option value="nigério-congolaises">Nigério-congolaises</option>
+            <option value="sino-tibétaines">Sino-tibétaines</option>
+            <option value="autres familles ou langues isolées">Autres familles ou langues isolées</option>
+          </select>
+        </div>
+
+        <div class="card-title d-flex justify-content-center">
+          <h5 class="card-text mt-4">
+            Sélectionnez le nombre de choix par question:
+          </h5>
+        </div>
+        <div class="card-body d-flex justify-content-center">
+          <select id="selec_nb_answer" class="form-select" aria-label="Toutes les familles">
+            <option value="5" selected>5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+          </select>
+        </div>
+        <div class="card-body d-flex justify-content-center">
+          <button class="lo_t2 btn-primary w-50" type="submit" onClick="clicko_text();"> Valider</button>
+        </div>
+      </div>
+
+      <script>
+        function clicko_text() {
+          var f = document.getElementById("selec_famille");
+          var selected_f = f.value;
+          var n = document.getElementById("selec_nb_answer");
+          var selected_n = n.value;
+          window.location.assign('quiz_text%3Fhard%3F'+selected_f+"%3F"+selected_n)
+        }
+      </script>
+    </div>
+
+    <div id="all2_audio" class="mb-5 row align-items-center a2">
+      <div class="card h-100 w-50">
+        <div class="card-title d-flex justify-content-center">
+          <h5 class="card-text mt-4">
+            Sélectionnez la famille de langues:
+          </h5>
+        </div>
+        <div class="card-body d-flex justify-content-center">
+          <select id="selec_famille_audio" class="form-select" aria-label="Toutes les familles">
+            <option value="all" selected>Toutes les familles</option>
+            <option value="afro-asiatiques">Afro-asiatiques</option>
+            <option value="altaïques">Altaïques</option>
+            <option value="austronésiennes">Austronésiennes</option>
+            <option value="créoles et pidgins">Créoles et pidgins</option>
+            <option value="indo-européennes">Indo-européennes</option>
+            <option value="nigério-congolaises">Nigério-congolaises</option>
+            <option value="sino-tibétaines">Sino-tibétaines</option>
+            <option value="autres familles ou langues isolées">Autres familles ou langues isolées</option>
+          </select>
+        </div>
+
+        <div class="card-title d-flex justify-content-center">
+          <h5 class="card-text mt-4">
+            Sélectionnez le nombre de choix par question:
+          </h5>
+        </div>
+        <div class="card-body d-flex justify-content-center">
+          <select id="selec_nb_answer_audio" class="form-select" aria-label="Toutes les familles">
+            <option value="5" selected>5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+          </select>
+        </div>
+        <div class="card-body d-flex justify-content-center">
+          <button class="lo_a2 btn-primary w-50" type="submit" onClick="clicko_audio();"> Valider</button>
+        </div>
+      </div>
+
+      <script>
+        function clicko_audio() {
+          var f = document.getElementById("selec_famille_audio");
+          var selected_f = f.value;
+          var n = document.getElementById("selec_nb_answer_audio");
+          var selected_n = n.value;
+          window.location.assign('quiz_audio%3Fhard%3F'+selected_f+"%3F"+selected_n)
+        }
+      </script>
+    </div>
+
+    <div id="load_audio" class="mt-5 mb-5 row align-items-center">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="spinner-border text-success" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center text-success">
+            <h3>Chargement du quiz audio...</h3>
+        </div>
+      </div>
+    </div>
+
+    <div id="load_text" class="mt-5 mb-5 row align-items-center">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="spinner-border text-success" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center text-success">
+            <h3>Chargement du quiz textuel...</h3>
+        </div>
+      </div>
+    </div>
+
+    <div id="load_audio2" class="mt-5 mb-5 row align-items-center">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="spinner-border text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center text-warning">
+            <h3>Chargement du quiz audio...</h3>
+        </div>
+      </div>
+    </div>
+
+    <div id="load_text2" class="mt-5 mb-5 row align-items-center">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="spinner-border text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center text-warning">
+            <h3>Chargement du quiz textuel...</h3>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+  var audio = document.querySelector('.audio');
+  audio.addEventListener( 'mouseover', function() {
+    document.getElementById('select_audio').style.display = "none";
+    document.getElementById('normal_audio').style.display = "block";
+    document.getElementById('custom_audio').style.display = "block";
+  });
+  audio.addEventListener( 'mouseout', function() {
+    document.getElementById('select_audio').style.display = "block";
+    document.getElementById('normal_audio').style.display = "none";
+    document.getElementById('custom_audio').style.display = "none";
+  });
+
+  var text = document.querySelector('.text');
+  text.addEventListener( 'mouseover', function() {
+    document.getElementById('select_text').style.display = "none";
+    document.getElementById('normal_text').style.display = "block";
+    document.getElementById('custom_text').style.display = "block";
+  });
+  text.addEventListener( 'mouseout', function() {
+    document.getElementById('select_text').style.display = "block";
+    document.getElementById('normal_text').style.display = "none";
+    document.getElementById('custom_text').style.display = "none";
+  });
+
+  var param_text = document.querySelector('.param_text');
+  param_text.addEventListener( 'click', function() {
+    document.getElementById('all').style.display = "none";
+    document.getElementById('all2_text').style.display = "block";
+  });
+
+  var param_audio = document.querySelector('.param_audio');
+  param_audio.addEventListener( 'click', function() {
+    document.getElementById('all').style.display = "none";
+    document.getElementById('all2_audio').style.display = "block";
+  });
+
+  var lo_a = document.querySelector('.lo_a');
+    lo_a.addEventListener( 'click', function() {
+    document.getElementById('all').style.display = "none";
+    document.getElementById('load_audio').style.display = "block";
+  });
+
+  var lo_t = document.querySelector('.lo_t');
+    lo_t.addEventListener( 'click', function() {
+    document.getElementById('all').style.display = "none";
+    document.getElementById('load_text').style.display = "block";
+  });
+
+  var lo_a2 = document.querySelector('.lo_a2');
+    lo_a2.addEventListener( 'click', function() {
+    document.getElementById('all2_audio').style.display = "none";
+    document.getElementById('load_audio2').style.display = "block";
+  });
+
+  var lo_t2 = document.querySelector('.lo_t2');
+    lo_t2.addEventListener( 'click', function() {
+    document.getElementById('all2_text').style.display = "none";
+    document.getElementById('load_text2').style.display = "block";
+  });
+
+</script>
+
+{% endblock content%}

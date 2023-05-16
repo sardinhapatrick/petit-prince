@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+  <!--<h1>Petit Prince</h1>-->
+  <div class="row_home align-items-center">
+    <div class="column_home">
+      <img id= "prince" src="https://cdn.radiofrance.fr/s3/cruiser-production/2019/11/22a536e5-08c0-4a31-bf36-e897521ce010/838_petit_prince.jpg" alt="petit_prince">
+    </div>
+    <div class="column_home">
+      <div class="about">
+        <p><strong>“On ne voit bien qu'avec le cœur”</strong><br><br>
+
+          Antoine de Saint-Exupéry <br>
+
+          HOMMAGE MULTILINGUE
+          AU PETIT PRINCE<br><br>
+
+          {{prince_language|list|length}} langues <br>
+          {{sounds|list|length}} extraits sonores <br><br>
+          ...pour le moment...
+        </p>
+      </div>
+      <div class="buttons">
+        <a class="btn btn-light bg-steel" href="{{ url_for('liste_langues')}}">Afficher la liste des langues</a>
+        <br>
+        <br>
+        <a class="btn btn-light bg-steel" href="{{ url_for('carte')}}">Afficher la carte du monde</a>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock content%}

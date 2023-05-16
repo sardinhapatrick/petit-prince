@@ -1,0 +1,129 @@
+.n_a {
+  width: 50%;
+  height: 50%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  position: relative;
+}
+
+
+.audio {
+  width: 50%;
+  height: 50%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  position: relative;
+}
+
+.text {
+  width: 50%;
+  height: 50%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  position: relative;
+}
+
+#select_audio {
+  width: 100%;
+  height: 100%;
+  display: block;
+  text-align: center;
+}
+
+#normal_audio {
+  width: 100%;
+  height: 100%;
+  display:none;
+  text-align: center;
+}
+
+
+#custom_audio {
+  width: 100%;
+  height: 100%;
+  display: none;
+  text-align: center;
+}
+
+#select_text {
+  width: 100%;
+  height: 100%;
+  display: block;
+  text-align: center;
+}
+
+#normal_text {
+  width: 100%;
+  height: 100%;
+  display:none;
+  text-align: center;
+}
+
+#custom_text {
+  width: 100%;
+  height: 100%;
+  display: none;
+  text-align: center;
+}
+
+
+#all2_text {
+  padding-top: 10%;
+  width: 100%;
+  height: 100%;
+  display: none;
+  text-align: center;
+}
+
+#all2_audio {
+  padding-top: 10%;
+  width: 100%;
+  height: 100%;
+  display: none;
+  text-align: center;
+}
+
+
+#load_audio {
+  padding-top: 15%;
+  width: 100%;
+  height: 100%;
+  display: none;
+  text-align: center;
+}
+
+#load_text {
+  padding-top: 15%;
+  width: 100%;
+  height: 100%;
+  display: none;
+  text-align: center;
+}
+
+#load_audio2 {
+  padding-top: 15%;
+  width: 100%;
+  height: 100%;
+  display: none;
+  text-align: center;
+}
+
+#load_text2 {
+  padding-top: 15%;
+  width: 100%;
+  height: 100%;
+  display: none;
+  text-align: center;
+}
+
+.spinner-border {
+  width: 100px; height: 100px;
+}
+
+.a2 {
+  text-align: center;
+  padding-left: 30%;
+}

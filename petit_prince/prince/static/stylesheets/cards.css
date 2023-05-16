@@ -1,0 +1,138 @@
+.scene {
+  width: 575px;
+  height: 300px;
+  margin: 0 0;
+  perspective: 600px;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  position: relative;
+}
+
+.card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card__face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 20px;
+  text-align: center;
+  font-size: 15px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.card__face--front {
+  background: none;
+}
+
+#card__face--back-1 {
+  line-height: 300px;
+  text-align: center;
+  font-size: 40px;
+  background: #48c639;
+}
+
+#card__face--back-2 {
+  line-height: 300px;
+  text-align: center;
+  font-size: 40px;
+  background: #ec1212;
+}
+
+.card__face--back {
+  transform: rotateY(180deg);
+}
+
+.txt_true {
+  position: absolute;
+  bottom: 1px;
+  right: 165px;
+  color: #fff;
+  font-size: 30px;
+}
+
+.txt_false {
+  position: absolute;
+  bottom: 1px;
+  right: 145px;
+  color: #fff;
+  font-size: 30px;
+}
+
+.txt_end {
+  color: #000;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+#quizEnd1 {
+  display: none;
+}
+
+#quizEnd2 {
+  display: none;
+}
+
+#quizEnd3 {
+  display: none;
+}
+
+.anime {
+  display: inline-block;
+  margin: 0 0.5rem;
+
+  animation: shakeX; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1s; /* don't forget to set a duration! */
+}
+
+#next {
+  display: none;
+}
+
+progress {
+  -webkit-appearance: none;
+}
+
+progress[value] {
+  height: 20px;
+}
+
+progress[value]::-moz-progress-bar {
+  background-image:
+    -moz-linear-gradient(
+      top,
+      rgba(255, 255, 255, 0.25),
+      rgba(0, 0, 0, 0.25)
+    ),
+    -moz-linear-gradient(
+      left,
+      #00cc03,
+      #f44
+    );
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+::-webkit-progress-bar {
+  background-color: orange;
+}

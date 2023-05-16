@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+
+
+<!--leaflet-->
+  <div id="mapid" style="height: 600px;"></div>
+  <script>
+
+    /*setView(lat et lng du centre, combien de zoom - 1 = minimum qui affiche carte en entier)*/
+    var mymap = L.map('mapid').setView([42.783307, 31.514282], 2);
+    //instanciation couche carte avec paramètres zoom
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+
+      maxZoom: 8,
+      maxNativeZoom: 8,
+      minZoom: 2,
+      wheelPxPerZoomLevel: 100,
+      panBy: 10,
+
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+
+
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1
+    }).addTo(mymap);
+
+
+    //création classe marqueur avec taille etc pour éviter répétition de code
+    var MapIcon = L.Icon.extend({
+    options: {
+      iconSize: [30, 36],
+    	iconAnchor: [12, 41],
+    	popupAnchor: [1, -34],
+    	shadowSize: [41, 41]
+      }
+    });
+    //instanciation des variantes de marqueurs (différentes couleurs)
+    //couleurs sont pris d'une image du petit prince
+    //prince jaune
+    var  prince_yellow = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/prince_yellow.png')}}'});
+        //prince vert
+        prince_green = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/prince_green.png')}}'});
+        //prince rose pâle
+        prince_palepink = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/prince_palepink.png')}}'});
+        //prince rose
+        prince_pink = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/prince_pink.png')}}'});
+        //prince red
+        prince_red = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/prince_red.png')}}'});
+        //colourlovers palette day dreaming blue
+        blueIcon = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/blue.png')}}'});
+//parcourir toutes les langues de la base de données pour placer chaque marqueur
+ {% for langue in prince_language %}
+    var lat = {{ langue.geolat|tojson }};
+    var lng = {{ langue.geolng|tojson }};
+    var french = {{ langue.french|tojson }};
+    var text = {{ langue.text|tojson|safe }};
+    var imgtext = {{ langue.imgtext|tojson }};
+    var iso = {{ langue.iso|tojson }};
+    var audioplayerJS = '';
+    //array audios, après on testera si vide ou pas
+    {% set audioplayerList = [] %}
+
+    //boucle pour aller chercher audio pour chaque langue
+    {% for sound in sounds %}
+      {%  if sound.language == langue.iso %}
+        {% set audioplayer = sound.filename %}
+        var audioplayerJS = {{ audioplayer|tojson}};
+        {% do audioplayerList.append(audioplayer) %}
+      {% endif %}
+    {% endfor %}
+
+
+    {% if langue.geolat != 0 %}
+      L.marker([lat,lng],
+      //test pour savoir s'il existe un audio
+      {% if audioplayerList|length %}
+        //langue principale en rose
+        {% if langue.varpron == 0 %}
+          {icon: prince_pink}
+        //variante de prononciation en jaune
+        {% elif langue.varpron == 1  %}
+          {icon: prince_yellow}
+        //dialecte en vert
+        {% elif langue.varpron == 2  %}
+          {icon: prince_green}
+        {% endif %}
+      {% else %}
+      // les langues sans enregistrements en bleu
+        {icon: blueIcon}
+      {% endif %}
+      ).addTo(mymap).bindPopup('<b>' + french + '</b><br>' +
+      //s'il existe au moins un audio, on met le premier(ou le dernier?), se lance automatiquement quand on clique dessus
+      {% if audioplayerList|length %}
+          '<audio controls src="{{ url_for('static', filename='audio/') }}' + audioplayerJS + '" autoplay = "autoplay" controlsList="nodownload">  Your browser does not support the <code>audio</code> element.</audio><p>' +
+      {% else %}
+        '<p> Pas d\'enregistrement disponible </p>' +
+      {% endif %}
+
+
+      //s'il y a un texte  on l'affiche
+      {% if langue.text != '' %}
+        text +
+      {% endif %}
+      //s'il y a une image on l'affiche en petit
+      {% if langue.imgtext != '' %}
+          '<img src="{{ url_for('static', filename='img/') }}{{langue.imgtext}}" style="width: 100%;" alt="Texte du Petit Prince en {{langue.french}}">' +
+      {% endif %}
+      //lien pour aller sur la page langue et tout voir en grand et écouter d'autres audios
+          '<br><a href="{{url_for('langue', lang=langue.french)}}">Voir la page :  {{langue.french}}</a>');
+    {% endif %}
+ {% endfor %}
+
+ var legend = L.control({position: 'bottomleft'});
+
+  legend.onAdd = function (mymap) {
+
+    var div = L.DomUtil.create('div', 'info-legend'),
+        types = [ 'langue', 'variante de prononciation', 'dialecte','sans enregistrement sonore'],
+
+        markers = [ '{{ url_for('static', filename='img/marker/prince_pink.png')}}','{{ url_for('static', filename='img/marker/prince_yellow.png')}}', '{{ url_for('static', filename='img/marker/prince_green.png')}}', '{{ url_for('static', filename='img/marker/blue.png')}}'];
+
+    for (var i = 0; i < types.length; i++) {
+        div.innerHTML +=
+             ("<img class='legend_map' src=" + markers[i] + " height='30' width='25'>")  + types[i] + "<br>";
+     }
+
+     return div;
+   };
+
+ legend.addTo(mymap);
+
+
+</script>
+<div class="padding-footer" style= "padding:20px">
+
+</div>
+
+{% endblock content %}

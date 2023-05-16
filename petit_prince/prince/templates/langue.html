@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  {% set page_title = sentence_case(title)%}
+
+  {% if langue.english != '' %}
+    {% set page_title = page_title + ' - ' + sentence_case(langue.english)|safe %}
+  {% endif %}
+
+  {% if langue.self != '' %}
+    {% set page_title = page_title + ' - ' + sentence_case(langue.self)%}
+  {% endif %}
+  <!-- Printing the name of the language with the first letter capitalized -->
+  <h2>{{page_title}}</h2>
+
+
+  <!-- If an image of the text is available, displays it -->
+  {% if langue.imgtext != '' %}
+  <img src="{{ url_for('static', filename='img/') }}{{langue.imgtext}}" style="width: 80%; " alt="Texte du Petit Prince en {{langue.french}}">
+  {% endif %}
+
+  <!-- Use of the |safe filter in order to display the text taking account of <br> -->
+  <p>{{langue.text|safe}}</p>
+  <div class="row_langue">
+    <div class="column_langue">
+      <!-- If there is at least one recording in this language, displays the list of recordings -->
+      {% if sounds.first() is not none %}
+        {% for sound in sounds %}
+          <audio controls src="{{ url_for('static', filename='audio/') }}{{sound.filename}}" controlsList="nodownload">
+            Your browser does not support the <code>audio</code> element.</audio> <!--{{sound.date}}--><br>
+        {% endfor %}
+        <br>
+      {% endif %}
+
+      <a class="btn btn-light bg-steel" style="background-color: #f6d6bf; color: #bc1c03;" href="{{url_for('liste_langues')}}">Retour à la liste des langues</a>
+      <a class="btn btn-light bg-steel" style="background-color: #f6d6bf; color: #bc1c03;" href="{{url_for('carte')}}">Retour à la carte</a><br><br>
+    </div>
+    <div class="column_langue">
+
+      <!--leaflet-->
+        <div id="mapid" class="map_langue"></div>
+        <script>
+          /*si les coordonnées ne sont pas 0,0 on affiche une carte*/
+          {% if langue.geolat != 0 %}
+            /*setView(lat et lng du centre, combien de zoom - 1 = minimum qui affiche carte en entier), ici centré sur la langue en question*/
+            var mymap = L.map('mapid').setView(['{{langue.geolat}}','{{langue.geolng}}'], 3);
+            //instanciation couche carte avec paramètres zoom
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 8,
+              maxNativeZoom: 8,
+              minZoom: 2,
+              wheelPxPerZoomLevel: 100,
+              panBy: 10,
+              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              id: 'mapbox/streets-v11',
+              tileSize: 512,
+              zoomOffset: -1
+            }).addTo(mymap);
+            //création classe marqueur avec taille etc pour éviter répétition de code
+            var MapIcon = L.Icon.extend({
+            options: {
+              iconSize: [30, 36],
+              iconAnchor: [12, 41],
+              popupAnchor: [1, -34],
+              shadowSize: [41, 41]
+              }
+            });
+            //instanciation des variantes de marqueurs (différentes couleurs)
+            var prince_yellow = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/prince_yellow.png')}}'});
+                //prince vert
+                prince_green = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/prince_green.png')}}'});
+                //prince rose pâle
+                prince_palepink = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/prince_palepink.png')}}'});
+                //prince rose
+                prince_pink = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/prince_pink.png')}}'});
+                //prince red
+                prince_red = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/prince_red.png')}}'});
+                //colourlovers palette day dreaming blue
+                blueIcon = new MapIcon({iconUrl: '{{ url_for('static', filename='img/marker/blue.png')}}'});
+
+            L.marker(['{{langue.geolat}}','{{langue.geolng}}'],
+              //test pour savoir s'il existe un audio
+              {% if sounds.first() is not none %}
+                //langue principale
+                {% if langue.varpron == 0 %}
+                  {icon: prince_pink}
+                //variante de prononciation
+                {% elif langue.varpron == 1  %}
+                  {icon: prince_yellow}
+                //dialecte
+                {% elif langue.varpron == 2  %}
+                  {icon: prince_green}
+                {% endif %}
+              {% else %}
+              // les langues sans enregistrements en gris
+                {icon: blueIcon}
+              {% endif %}
+              ).addTo(mymap);
+
+              var legend = L.control({position: 'bottomleft'});
+
+               legend.onAdd = function (mymap) {
+
+                 var div = L.DomUtil.create('div', 'info-legend'),
+                     types = ['langue', 'variante de prononciation', 'dialecte','sans enregistrement sonore'],
+
+                     markers = ['{{ url_for('static', filename='img/marker/prince_pink.png')}}','{{ url_for('static', filename='img/marker/prince_yellow.png')}}', '{{ url_for('static', filename='img/marker/prince_green.png')}}', '{{ url_for('static', filename='img/marker/blue.png')}}'];
+
+
+                 for (var i = 0; i < types.length; i++) {
+                     div.innerHTML +=
+                          ("<img class='legend_map' src=" + markers[i] + " height='30' width='25'>") +  types[i] + '<br>';
+                  }
+
+                  return div;
+                };
+
+              legend.addTo(mymap);
+          {% endif %}
+      </script>
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+
+
+{% endblock content%}

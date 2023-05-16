@@ -1,0 +1,239 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<head>
+<style media="screen">
+  .footer{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+</style>
+</head>
+
+
+<div id="quiz" class="mt-5 mb-5 row">
+    <div class="col">
+      <div class="col-sm-12">
+        <div class="scene scene--card">
+          <div class="card 100%">
+            <div class="card__face card__face--front">
+
+              <h4 class="card-title mb-5">A vous de devinez la langue ...</h4>
+              <p class="card-text">
+                {% for l in list_lang %}
+                  {% if l[1] == 1 %}
+                    <audio controls src="{{ url_for('static', filename='audio/') }}{{l[2]}}" controlsList="nodownload"></audio>
+                  {% endif %}
+                {% endfor %}
+              </p>
+            </div>
+            <div id="card__face--back-1" class="card__face card__face--back">
+              <img class="" src="../static/img/gif/prince.gif" alt="Prince" style="width: 575px; height: 310px;">
+              <div class="txt_true"> BONNE REPONSE </div>
+            </div>
+            <div id="card__face--back-2" class="card__face card__face--back">
+              <img class="" src="../static/img/gif/prince.gif" alt="Prince" style="width: 575px; height: 310px;">
+              <div class="txt_false"> MAUVAISE REPONSE </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 col-sm-12">
+        <div class="card h-50">
+          <div class="card-body d-flex justify-content-center">
+            <form>
+                {% for l in list_lang %}
+                  {% if l[1] == 1 %}
+                    <button type="submit" onClick="setCookie({{l[1]}}); swapcard({{l[1]}}); show_res(`{{l[1]}}`,`{{lang_ok}}`);" class="answer btn btn-outline-primary" data-mdb-ripple-color="dark">
+                      {{l[0]}}
+                    </button>
+                  {% else %}
+                    <button type="button" onClick="setCookie({{l[1]}}); swapcard({{l[1]}}); show_res(`{{l[1]}}`,`{{lang_ok}}`);" class="answer false-answ btn btn-outline-primary" data-mdb-ripple-color="dark">
+                      {{l[0]}}
+                    </button>
+                  {% endif %}
+                {% endfor %}
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="card h-75">
+        <div class="card-body">
+          <h3 class="card-title mb-5">Votre score:
+              <script type="text/javascript">
+                document.write(getCookie("score"));
+              </script>
+          </h3>
+          <p id="show"></p>
+        </div>
+        <div class="container">
+          <div class="row justify-content-md-center">
+            <div id="progr" class="col-md-auto mt-2">
+            </div>
+            <div class="col-md-auto">
+              <p id="text-prog" class="mt-1"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 col-sm-12 text-center">
+        <div class="card h-75">
+          <div id="hint" class="card-body">
+            <form>
+              <button id="hint-btn" type="button" onClick="getHint(); setHint()" class="show-hint btn btn-outline-primary" data-mdb-ripple-color="dark">Indice</button>
+            </form>
+          </div>
+          <div id="next" class="card-body">
+            <form>
+              <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-color="dark">Question suivante</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div id="quizEnd1">
+  <div>
+    <div class="row align-items-center">
+      <div class="col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+        <img class="mt-5 mb-5 w-25" src="../static/img/quiz_finish1.png" alt="Quiz audio">
+        <a href="{{url_for('quiz_home')}}">
+          <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+        </a>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+        <p id="result1" class="txt_end"></p>
+      </div>
+    </div>
+
+  </div>
+  <script type="text/javascript">
+    if (getCookie("total") == "10" && getCookie("score") <= 3){
+      document.getElementById('quiz').style.display = "none";
+      document.getElementById('quizEnd1').style.display = "block";
+      var score = getCookie("score")
+      document.getElementById("result1").innerHTML += "<h1>Votre score est de " + score + " / 10 <br> Retente ta chance ! </h1>"
+    }
+  </script>
+</div>
+
+<div id="quizEnd2">
+  <div>
+    <div class="row align-items-center">
+      <div class="col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+        <img class="mt-5 mb-5" src="../static/img/quiz_finish2.png" alt="Quiz audio">
+        <a href="{{url_for('quiz_home')}}">
+          <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+        </a>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+        <p id="result2" class="txt_end"></p>
+      </div>
+    </div>
+
+  </div>
+  <script type="text/javascript">
+    if (getCookie("total") == "10" && getCookie("score") > 3 && getCookie("score") < 7){
+      document.getElementById('quiz').style.display = "none";
+      document.getElementById('quizEnd2').style.display = "block";
+      var score = getCookie("score")
+      document.getElementById("result2").innerHTML += "<h1> Pas mal ! Ton score est de " + score + " / 10 <br> Mais tu peux faire mieux ! </h1>"
+    }
+  </script>
+</div>
+
+<div id="quizEnd3">
+  <div>
+    <div class="row align-items-center">
+      <div class="col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+        <img class="mt-5" src="../static/img/quiz_finish3.png" alt="Quiz audio">
+        <a href="{{url_for('quiz_home')}}">
+          <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+        </a>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col d-flex justify-content-center bg-image hover-overlay ripple rounded" data-mdb-ripple-color="light">
+        <p id="result3" class="txt_end"></p>
+      </div>
+    </div>
+
+  </div>
+  <script type="text/javascript">
+    if (getCookie("total") == "10" && getCookie("score") >= 7){
+      document.getElementById('quiz').style.display = "none";
+      document.getElementById('quizEnd3').style.display = "block";
+      var score = getCookie("score")
+      document.getElementById("result3").innerHTML += "<h1> Félicitation ! Ton score est de " + score + " / 10 <br> Tu es un vrai expert !</h1>"
+    }
+  </script>
+  <canvas id="Canvas"></canvas>
+  <script src="../static/js/fireworks.js"></script>
+</div>
+
+
+<script type="text/javascript">
+  var t = getCookie('total')*10;
+  document.getElementById("progr").innerHTML = "<progress value="+ t + " max='100'>"
+  document.getElementById("text-prog").innerHTML = "<h4 style='color: #bc1c03;'>" + t + "%</h4>"
+
+  var elem_list = document.getElementsByClassName("false-answ");
+  if (elem_list.length == 1){
+    document.getElementById('hint-btn').style.visibility = "hidden";
+  }
+
+  var card = document.querySelector('.card');
+  function swapcard(isCorrect) {
+    var elems = document.getElementsByClassName("answer");
+    for(var i = 0; i < elems.length; i++) {
+      elems[i].disabled = true;
+    }
+    if (isCorrect == 1) {
+      card.classList.toggle('is-flipped');
+      document.getElementById('card__face--back-1').style.visibility = "visible";
+      document.getElementById('card__face--back-2').style.visibility = "hidden";
+      document.getElementsByClassName('show-hint')[0].disabled = true;
+    } else {
+      card.classList.toggle('anime');
+      document.getElementById('hint').style.display = "none";
+      document.getElementById('next').style.display = "block";
+    }
+  };
+
+  function getHint(isHint) {
+    var elems = document.getElementsByClassName("false-answ");
+    if (elems.length > 1){
+      const randi1 = Math.floor(Math.random() * elems.length);
+      elems[randi1].disabled = true;
+      if (elems.length > 2) {
+        var randi2 = Math.floor(Math.random() * elems.length);
+        while (randi1 == randi2) {
+          randi2 = Math.floor(Math.random() * elems.length);
+        }
+        elems[randi2].disabled = true;
+      }
+      document.getElementsByClassName('show-hint')[0].disabled = true;
+    }
+  }
+
+  function show_res(isCorrect, answ) {
+    if (isCorrect == 1) {
+      document.getElementById("show").innerHTML += "<h1 style='color: green;'> Bravo !<br> La réponse était bien " + answ + "</h1>"
+    } else {
+      document.getElementById("show").innerHTML += "<h1 style='color: red;'> Dommage !<br> La réponse était " + answ + "</h1>"
+    }
+  };
+
+</script>
+
+{% endblock content%}

@@ -1,0 +1,80 @@
+root
+├── afro-asiatiques
+│   ├── berbères
+│   ├── couchitiques
+│   ├── sémitiques
+│   │   ├── Nord-Est (langues éteintes)
+│   │   ├── Nord-Ouest
+│   │   └── Sud
+│   └── égyptiennes
+├── altaïques
+│   ├── mongoles
+│   └── turques
+├── austroasiatiques
+│   └── môn-khmer
+├── austronésiennes
+│   ├── malayo-polynésiennes
+│   └── tai-kadai
+├── autres familles ou langues isolées
+│   ├── japonais et langues apparentées
+│   └── langues des Amériques
+│       └── chibchan
+├── caucasiennes
+│   └── du Sud (kartvéliennes)
+├── caucasiennes
+├── créoles et pidgins
+│   ├── à base anglaise
+│   ├── à base française
+│   └── à base portugaise
+├── indo-européennes
+│   ├── albanaises
+│   ├── arméniennes
+│   ├── balto-slaves
+│   │   ├── baltes
+│   │   └── slaves
+│   │       ├── branche méridionale
+│   │       ├── branche occidentale
+│   │       └── branche orientale
+│   ├── celtiques
+│   │   ├── brittoniques
+│   │   └── gaéliques
+│   ├── germaniques
+│   │   ├── branche Nordique, septentrionale ou scandinave
+│   │   └── branche occidentale
+│   │       ├── anglo-frisonnes
+│   │       └── germano-néerlandaises (bas- et haut-allemand)
+│   │           └── allemand et langues apparentées
+│   ├── grecques
+│   │   └── ioniennes-attiques
+│   ├── indo-iraniennes
+│   │   ├── indo-aryennes
+│   │   └── iraniennes
+│   └── italiques
+│       ├── latines
+│       └── romanes
+│           ├── gallo-romanes
+│           ├── ibéro-romanes
+│           │   ├── espagnol et langues apparentées
+│           │   └── portugais et langues apparentées
+│           ├── italo-romanes
+│           ├── occitano-romanes
+│           ├── orientales
+│           ├── rhéto-romanes
+│           └── sardes
+├── langues artificielles
+├── nigério-congolaises
+│   ├── bantoues
+│   ├── camerounaises
+│   ├── de l'Ouest-Atlantiques
+│   ├── kwa
+│   └── mandé
+├── nilo-sahariennes
+├── ouraliennes
+│   └── finno-ougriennes
+│       ├── fenniques
+│       └── ougriennes
+├── sino-tibétaines
+│   ├── chinois et langues apparentées
+│   └── tibéto-birmane
+└── tupi-guarani
+

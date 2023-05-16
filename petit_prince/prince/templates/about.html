@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="about_box">
+  <h2>À propos</h2>
+  Ce site a pour but de répertorier plus de 140 langues ({{prince_language|list|length}} langues actuellement) à travers le monde.
+  Chaque langue est présentée à travers un extrait du même texte, ainsi qu’un ou plusieurs enregistrements qui y sont associés s’il en existe.<br><br>
+  Voici l'extrait en français:<br><br>
+  “On ne connaît que les choses que l’on apprivoise, dit le renard. Les hommes n’ont plus le temps de rien connaître. Ils achètent des choses toutes faites chez les marchands. Mais comme il n’existe point de marchands d’amis, les hommes n’ont plus d’amis. Si tu veux un ami, apprivoise-moi ! [...]<br>
+  Adieu, dit le renard. Voici mon secret. Il est très simple : on ne voit bien qu’avec le cœur. L’essentiel est invisible pour les yeux.” <br>
+  <i>Le Petit Prince</i>, Antoine de Saint-Exupéry, ch. 21.<br><br><br>
+
+  <i>Le site web du Petit Prince a été développé par Constance Dami et Naomi Wooding sur une idée de Jean-Philippe Goldman.
+  Ce projet a été réalisé dans le cadre du cours NTIC de Luka Nerima et Haozhou Wang, à la Faculté des Lettres, Université de Genève.<br>
+  <br>
+  Framework: <a class="text-my-own-color" href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a><br>
+  Design: utilisation de <a class="text-my-own-color" href="https://mdbootstrap.com">Bootstrap</a>
+   avec les palettes de  <a class="text-my-own-color" href="https://www.colourlovers.com">ColourLovers</a><br>
+  Carte: <a class="text-my-own-color" href="https://www.openstreetmap.org">Open Street Map</a>
+   et la librairie javascript <a class="text-my-own-color" href="https://leafletjs.com">Leaflet</a></i><br><br>
+
+</div>
+{% endblock content %}
